@@ -1,7 +1,7 @@
 {
   "name": "nodejs-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Initiating a NodeJS application.",
   "main": "server.js",
   "dependencies": {
     "express-session": "^1.17.3",
@@ -13,5 +13,13 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sg-rk/NodeJS-Workouts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sg-rk/NodeJS-Workouts/issues"
+  },
+  "homepage": "https://github.com/sg-rk/NodeJS-Workouts#readme"
 }
