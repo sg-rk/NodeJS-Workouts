@@ -4,8 +4,10 @@
   "description": "Initiating a NodeJS application.",
   "main": "server.js",
   "dependencies": {
+    "connect-mongodb-session": "^3.1.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "mongoose": "^7.6.2",
     "nodemon": "^3.0.1"
   },
   "devDependencies": {
