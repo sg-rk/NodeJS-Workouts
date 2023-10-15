@@ -1,12 +1,12 @@
 const express = require('express');
 const session = require('express-session');
-const { secret } = require("./config");
+const { secret, token_name } = require("./config");
 const mongoose = require('mongoose');
-const mongoDBStore = require('connect-mongodb-session')(session);
 const UserModel = require("./models/User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const cookieparser = require("cookie-parser");
 const app = express();
-
 const sessionDBURI = "mongodb://localhost:27017/sessions";
 
 mongoose
@@ -19,29 +19,28 @@ mongoose
         console.log('MongoDB connected.')
     })
 
-const store = new mongoDBStore({
-    uri: sessionDBURI,
-    collection: "mySessions"
-});
-
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }))
-
-app.use(
-    session({
-        resave: false,
-        saveUninitialized: false,
-        secret: secret,
-        store: store
-    })
-);
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieparser());
 
 const isAuth = (req, res, next) => {
-    if (req.session.isAuth) {
-        next();
+    const token = req.cookies[token_name];
+    let verified = false;
+    if(token){
+        try{
+            verified = jwt.verify(token, secret);
+            if(verified){
+                req.user = verified;
+                next();
+            };    
+        }
+        catch(err){
+            res.redirect("/login")
+        };
     }
-    else {
-        res.redirect("/login");
+    else{
+        console.log("rk ", token, verified);
+        return res.clearCookie(token_name).redirect("login");
     }
 }
 
@@ -54,6 +53,7 @@ app.get("/dashboard", isAuth, (req, res) => {
 });
 
 app.get("/login", (req, res) => {
+    res.clearCookie(token_name);
     res.render("login");
 });
 
@@ -70,7 +70,10 @@ app.post("/login", async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(password, user.password);
 
     if (isPasswordMatch) {
-        req.session.isAuth = true;
+        const token = jwt.sign({email, password}, secret, {expiresIn: "1m"});
+        res.cookie(token_name, token, {
+            httpOnly: true
+        })
         return res.redirect("/dashboard");
     }
 
@@ -104,10 +107,8 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-    req.session.destroy((err) => {
-        if (err) throw err;
-        res.redirect("/");
-    });
+    res.clearCookie(token_name);
+    return res.redirect("/");
 })
 
 app.listen(5000, console.log("Server running successfully.."));
