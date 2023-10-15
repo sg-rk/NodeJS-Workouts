@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .pageTitleBox {
+            font-size: xx-large;
+        }
+
+        .primaryContent {
+            padding: 10px;
+            margin: 10px;
+            width: 50%;
+            background-color: darkgoldenrod;
+        }
+
+        .linkBoxContainer {
+            display: flex;
+        }
+
+        .linkBox {
+            padding: 20px;
+            margin: 4px;
+            background-color: brown;
+        }
+
+        .linkBox span {
+            font-size: large;
+            color: beige;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pageTitleBox">
+        <span>Dashboard Page</span>
+    </div>
+    <div class="pageContent">
+        <div class="primaryContent">
+            <h1>Dashboard Content</h1>
+        </div>
+    </div>
+    <form class="linkBoxContainer" action="/logout" method="post">
+        <button><span>Logout</span></button>
+    </form>
+</body>
+
+</html>

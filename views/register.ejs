@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .pageTitleBox {
+            font-size: xx-large;
+        }
+
+        .formGroup {
+            display: block;
+            justify-content: center;
+            border: black 1px solid;
+            width: fit-content;
+            padding: 15px;
+            margin: 10px;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: flex-end;
+            margin: 5px;
+            padding: 5px;
+        }
+
+        .input-label {
+            font-size: 25px !important;
+        }
+
+        .input-box {
+            margin: 0px 10px;
+        }
+
+        .actionButtonGroup {
+            display: flex;
+            justify-content: center;
+        }
+
+        .actionButtonGroup button {
+            background: transparent;
+            border: black 1px solid;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .linkBoxContainer {
+            display: flex;
+        }
+
+        .linkBox {
+            padding: 20px;
+            margin: 4px;
+            background-color: brown;
+        }
+
+        .linkBox span {
+            font-size: large;
+            color: beige;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pageTitleBox">
+        <span>Register Page</span>
+    </div>
+    <div class="pageContent">
+        <div class="formGroup">
+            <form id="loginForm" method="post" action="/register">
+                <div class="input-group">
+                    <label class="input-label">Username : </label>
+                    <input type="text" class="input-box" name="username">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Email : </label>
+                    <input type="email" class="input-box" name="email">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Password : </label>
+                    <input type="password" class="input-box" name="password">
+                </div>
+                <div class="actionButtonGroup">
+                    <button class="button">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="linkBoxContainer">
+        <div class="linkBox">
+            <a href="login"><span>Login</span></a>
+        </div>
+    </div>
+</body>
+
+</html>
