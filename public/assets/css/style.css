@@ -1,0 +1,108 @@
+body {
+    height: 97vh;
+    margin: 0px !important;
+}
+
+.mainBox {
+    position: relative;
+    display: block;
+    border: 1px solid green;
+    background-color: green;
+    width: 100%;
+    height: 100%;
+}
+
+.head {
+    position: absolute;
+    width: 15%;
+    height: 28%;
+    border-radius: 50%;
+    background-color: beige;
+    top: 36%;
+    left: 42.5%;
+    box-shadow: 1px 1px 10px black;
+}
+
+.headLayer {
+    z-index: 1;
+}
+
+.ear {
+    position: absolute;
+    width: 45%;
+    height: 55%;
+    background-color: black;
+    border-radius: 50%;
+    border: 2px solid darkslateblue;
+    box-shadow: 1px 1px 10px black;
+}
+
+.earLeft {
+    right: 70%;
+}
+
+.earRight {
+    left: 70%;
+}
+
+.earInner {
+    position: absolute;
+    background-color: darkgoldenrod;
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    top: 7%;
+    border: 1px solid black;
+}
+
+.earInnerLeft {
+    right: 0%;
+}
+
+.eye {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    background-color: white;
+    border-radius: 50%;
+    top: 30%;
+    box-shadow: 0.1px 0.1px 0.6px gray;
+}
+
+.eyeLeft {
+    right: 63%;
+}
+
+.eyeRight {
+    left: 63%;
+}
+
+.eyeInner {
+    position: absolute;
+    background-color: black;
+    border-radius: 50%;
+    width: 50%;
+    height: 50%;
+    top: 25%;
+    left: 25%;
+}
+
+.nose {
+    position: absolute;
+    width: 18%;
+    height: 15%;
+    background-color: sandybrown;
+    border-radius: 50%;
+    left: 41%;
+    top: 54%;
+}
+
+.mouth {
+    position: absolute;
+    background-color: black;
+    width: 50%;
+    height: 3%;
+    top: 80%;
+    left: 25%;
+    border-radius: 50% 50% 100% 100%;
+}
