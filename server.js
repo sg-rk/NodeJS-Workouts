@@ -15,7 +15,7 @@ let dataStore = [
 http.createServer((req, res)=>{
     const {headers, method} = req;
     const url = urlModule.parse(req.url, true);
-
+    console.log(url);
     req.on('error', (err)=>{
         console.error('rk ', err);
         res.statusCode = 400;
@@ -40,9 +40,12 @@ http.createServer((req, res)=>{
     }
     else if(method == "POST"){
         switch (url.pathname) {
-            case "/projects":                
+            case "/projects":           
                 saveProject(req, res);
                 break;        
+            case "/projects/delete":
+                deleteProject(req, res, url);
+                break;
             default:
                 apiNotFound(req, res);
                 break;
@@ -111,7 +114,7 @@ const saveProject = (req, res) => {
 };
 
 const fetchProject = (req, res, url) => {
-    if(url.query && url.query.id){
+    if(!!url.query && !!url.query.id){
         let data = null;
         for(let d of dataStore){
             if(url.query.id == d.id){
@@ -129,8 +132,40 @@ const fetchProject = (req, res, url) => {
         }
     }
     else {
-        res.write(JSON.stringify(dataStore));
-        res.statusCode = 200;
+        if(url.query.id == '') {
+            res.write('Invalid params!');
+            res.statusCode = 400;    
+        }
+        else {
+            res.write(JSON.stringify(dataStore));
+            res.statusCode = 200;    
+        }
+    }
+    res.end();
+}
+
+const deleteProject = (req, res, url) => {
+    if(url.query && url.query.id){
+        let isDeleted = false;
+        for(let [i, d] of dataStore.entries()){
+            if(url.query.id == d.id){
+                dataStore.splice(i, 1);
+                isDeleted = true;
+                break;
+            }
+        }
+        if(isDeleted) {
+            res.statusCode = 200;
+            res.write('Record delete!')
+        }else {
+            res.statusCode = 404;
+            res.write('Record not found!');    
+        }
+        res.end();
+    }
+    else {
+        res.statusCode = 404;
+        res.write('Record not found!');
     }
     res.end();
 }
