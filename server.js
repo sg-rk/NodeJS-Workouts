@@ -16,8 +16,6 @@ http.createServer((req, res)=>{
     const {headers, method} = req;
     const url = urlModule.parse(req.url, true);
 
-    let body = [];
-
     req.on('error', (err)=>{
         console.error('rk ', err);
         res.statusCode = 400;
@@ -30,7 +28,7 @@ http.createServer((req, res)=>{
     if(method == 'GET'){
         switch (url.pathname) {
             case "/echo":
-                echoFunction(req, res, body);
+                echoFunction(req, res);
                 break;
             case "/projects":
                 fetchProject(req, res, url);
@@ -43,7 +41,7 @@ http.createServer((req, res)=>{
     else if(method == "POST"){
         switch (url.pathname) {
             case "/projects":                
-                saveProject(req, res, body);
+                saveProject(req, res);
                 break;        
             default:
                 apiNotFound(req, res);
@@ -64,7 +62,8 @@ const apiNotFound = (req, res) => {
     res.end('API not found!')
 }
 
-const echoFunction = (req, res, body) => {
+const echoFunction = (req, res) => {
+    let body = [];
     req
     .on('data', (chunk) => {
         body.push(chunk);
@@ -81,7 +80,8 @@ const echoFunction = (req, res, body) => {
     });
 }
 
-const saveProject = (req, res, body) => {
+const saveProject = (req, res) => {
+    let body = [];
     req
         .on('data', (chunk) => {
             body.push(chunk);
@@ -112,16 +112,25 @@ const saveProject = (req, res, body) => {
 
 const fetchProject = (req, res, url) => {
     if(url.query && url.query.id){
+        let data = null;
         for(let d of dataStore){
             if(url.query.id == d.id){
-                res.write(JSON.stringify(d));
+                data = JSON.stringify(d);
                 break;
             }
+        }
+        if(!!data) {
+            res.write(data);
+            res.statusCode = 200;
+        }
+        else {
+            res.statusCode = 404;
+            res.write('Record not found!')
         }
     }
     else {
         res.write(JSON.stringify(dataStore));
+        res.statusCode = 200;
     }
-    res.statusCode = 200;
     res.end();
 }
