@@ -46,6 +46,9 @@ http.createServer((req, res)=>{
             case "/projects/delete":
                 deleteProject(req, res, url);
                 break;
+            case "/projects/update":
+                updateProject(req, res, url);
+                break;
             default:
                 apiNotFound(req, res);
                 break;
@@ -168,4 +171,39 @@ const deleteProject = (req, res, url) => {
         res.write('Record not found!');
     }
     res.end();
+}
+
+const updateProject = (req, res, url) => {
+    if(url.query && url.query.id){
+        let body = [];
+        req
+            .on('data', (chunk) => {
+                body.push(chunk);
+            })
+            .on('end', () => {
+                body = JSON.parse(Buffer.concat(body).toString());
+                let isUpdated = false;
+                for(let [i, d] of dataStore.entries()){
+                    if(url.query.id == d.id){
+                        dataStore[i] = body;
+                        isUpdated = true;
+                        break;
+                    }
+                }
+                if(isUpdated) {
+                    res.statusCode = 200;
+                    res.write('Record updated!');
+                    res.write(`\n${JSON.stringify(body)}`);
+                }else {
+                    res.statusCode = 404;
+                    res.write('Record not found!');    
+                }
+                res.end();
+            });
+    }
+    else {
+        res.statusCode = 404;
+        res.write('Record not found!');
+        res.end();
+    }
 }
