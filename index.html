@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Socket</title>
+</head>
+
+<body>
+    <h3>This web app of web socket experiment.</h3>
+    <script>
+        const wss = new WebSocket('ws://localhost:8082/');
+
+        wss.addEventListener('open', (e) => {
+            console.log('Send handshake request!', e);
+
+            wss.send('Hey, web Socket!');
+
+            wss.addEventListener('message', (m) => {
+                console.log('Message from websocket : ', m.data)
+            })
+        })
+
+    </script>
+</body>
+
+</html>

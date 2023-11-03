@@ -4,8 +4,9 @@
   "description": "Initiating a NodeJS application.",
   "main": "server.js",
   "dependencies": {
+    "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "express": "^4.18.2"
+    "ws": "^8.14.2"
   },
   "devDependencies": {},
   "scripts": {
